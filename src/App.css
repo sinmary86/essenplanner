@@ -1,38 +1,232 @@
-.App {
+/* Общий фон для всего приложения */
+body {
+  background: url(essenplan.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+}
+
+/* Заголовок */
+h1 {
+  font-family: "Roboto", sans-serif;
+  background-color: #efdfe2;
+  border-radius: 20px;
+  padding: 15px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+/* Текст для незапланированных дней */
+h6 {
+  font-family: "Roboto", sans-serif;
+  color: #dcedf7;
+  font-size: 25px;
+  text-align: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Стили для контейнера */
+.meal-container {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* Список дней */
+.meal-list {
+  width: 40%;
   display: flex;
   flex-direction: column;
+  gap: 15px;
+}
+
+/* Подробности выбранного дня */
+.meal-details {
+  width: 60%;
+  background-color: #f7f9fc;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.btn-add {
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-family: "Roboto", sans-serif;
+  font-size: 17px;
+  font-weight: bold;
+  background-color: #4caf50;
   color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 15px 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-.App-link {
-  color: #61dafb;
+.btn-add:hover {
+  background-color: #45a049;
+  transform: scale(1.05); /* Легкое увеличение при наведении */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.btn-add:active {
+  background-color: #3e8e41; /* Более темный цвет при нажатии */
+  transform: scale(0.98); /* Легкое уменьшение при нажатии */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.meal {
+  background-color: #dcedf7;
+  border-radius: 10px;
+  padding: 10px;
+  cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.meal:hover {
+  background-color: #bcd4f0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Легкая тень */
+  transform: translateY(-3px); /* Поднимаем элемент при наведении */
+}
+
+.meal.selected {
+  background-color: #efdfe2;
+}
+
+.meal:active {
+  background-color: #a0c4e5; /* Еще более насыщенный цвет при клике */
+  transform: translateY(1px); /* Легкий эффект нажатия */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Ослабляем тень */
+}
+
+.field {
+  font-size: 15px;
+  margin: 0;
+}
+
+.btn-delete {
+  font-size: 18px;
+  background: none;
+  border: none;
+  color: #000; 
+  cursor: pointer;
+  transition: color 0.3s ease; 
+}
+
+.btn-delete:hover {
+  color: red;
+}
+
+
+.myInput {
+  width: 97%;
+  height: 40px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+textarea {
+  display: block;
+  width: 97%;
+  height: 100px;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 16px;
+}
+
+.highlighted-message {
+  font-family: "Roboto", sans-serif;
+  color: #3b254d; /* Темный цвет текста */
+  font-size: 32px; /* Увеличенный размер шрифта */
+  font-weight: bold;
+  background-color: #efdfe2; /* Используемый цвет для фона */
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+  margin: 20px auto;
+  max-width: 80%;
+  box-shadow: 0px 4px 15px rgba(239, 223, 226, 0.2); /* Легкая тень */
+
+  /* Добавляем начальное состояние для анимации */
+  animation: fadeInBounce 2s ease, pulse 2s infinite;
+}
+
+/* Анимация плавного появления и "подпрыгивания" */
+@keyframes fadeInBounce {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
   }
-  to {
-    transform: rotate(360deg);
+  50% {
+    transform: scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Анимация пульсации */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0px 4px 15px rgba(239, 223, 226, 0.2); /* Бледная тень */
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0px 8px 30px rgba(239, 223, 226, 0.6); /* Более яркая тень */
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0px 4px 15px rgba(239, 223, 226, 0.2); /* Бледная тень */
+  }
+}
+
+
+@media (max-width: 768px) {
+  .meal-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .meal-list {
+    width: 90%;
+  }
+
+  .meal-details {
+    width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 20px;
+    padding: 10px;
+  }
+
+  .btn-add {
+    font-size: 15px;
+    padding: 10px;
+  }
+
+  .meal {
+    padding: 10px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .myInput,
+  textarea {
+    font-size: 14px;
   }
 }
